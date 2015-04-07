@@ -1,0 +1,26 @@
+.sticky-container {
+	position: fixed;
+	top: 150px;
+	/*right: 100px;*/
+	background: #707172;
+	padding: 5px;
+	/*border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;*/
+	color: white;
+	line-height: 40px;
+	a {
+		color: white;
+		&:visited {}
+		&:hover {
+			color: #FFD300;
+		}
+	}
+	img {
+		vertical-align: middle;
+		width: 39px;
+		height: 39px;
+	}
+}
+.sticky-link {
+	
+}
