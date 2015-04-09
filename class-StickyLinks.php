@@ -2,9 +2,9 @@
 if (!class_exists('StickyLinks')) {
 	class StickyLinks {
 			
-		var $linkImages = array();
+		var $linkImage = array();
 		var $linkText = array();
-		var $linkAcnhor = array();
+		var $linkAnchor = array();
 	
 		function __construct() {
 			add_action( 'wp_enqueue_scripts', array($this, 'StickyLinks_scripts') );
@@ -13,17 +13,19 @@ if (!class_exists('StickyLinks')) {
 			add_action('wp_footer', array($this, 'StickyLinks_latent'));
 			add_action('wp_footer', array($this, 'StickyLinks_action'));
 			
-			$this->linkImages[] = plugin_dir_url( __FILE__ ) . '/includes/images/icona-demo.png';
+			/*$this->linkImages[] = plugin_dir_url( __FILE__ ) . '/includes/images/icona-demo.png';
 			$this->linkImages[] = plugin_dir_url( __FILE__ ) . '/includes/images/icona-chat.png';
 			$this->linkImages[] = plugin_dir_url( __FILE__ ) . '/includes/images/icona-FB.png';
 			
-			$this->linkText[] = 'DEMO';
-			$this->linkText[] = 'CHAT';
-			$this->linkText[] = 'FB';
+			$this->linkText[] = '';
+			$this->linkText[] = '';
+			$this->linkText[] = '';
 			
 			$this->linkAnchor[] = '?page_id=191';
 			$this->linkAnchor[] = 'http://messenger.providesupport.com/messenger/livetelematic.html';
-			$this->linkAnchor[] = '';
+			$this->linkAnchor[] = '';*/
+			
+			
 			
 		}
 		
@@ -38,6 +40,7 @@ if (!class_exists('StickyLinks')) {
 		}
 		
 		function StickyLinks_action() {
+			$this->populateLinks();
 			$content = $this->getStickyContainer();
 			echo $content;
 		}
@@ -58,10 +61,29 @@ if (!class_exists('StickyLinks')) {
 			      'has_archive' => false,
 			      'supports' =>array(
 			      	'title',
+			      	'editor',
 			      	'thumbnail'
 				  )
 			    )
-			  );
+			);
+			add_theme_support( 'post-thumbnails', array( 'sticky_links' ) );  
+		}
+		
+		private function populateLinks() {
+			$args = array(
+				'post_type' => 'sticky_links'
+			);
+			$loop = new WP_Query($args);
+			if ($loop->have_posts()) {
+				while ($loop->have_posts()) {
+					$loop->the_post();
+					$this->linkText[] = get_the_title();
+					$this->linkAnchor[] = get_the_content();
+					$this->linkImage[] = get_the_post_thumbnail( get_the_ID(), array(39,39));
+				}
+				wp_reset_postdata();
+			}
+			
 		}
 		
 		/*Internal functions*/
@@ -73,11 +95,11 @@ if (!class_exists('StickyLinks')) {
 			for ($i = 0; $i < 3; $i++) {
 				?>
 					<div class="sticky-link">
-						<a href="">
+						<a href="<?php echo $this->linkAnchor[$i] ?>">
 							<?php
-								if (!empty($this->linkImages[$i])) {
+								if (!empty($this->linkImage[$i])) {
 							?>
-									<img class="sticky-img" src="<?php echo $this->linkImages[$i] ?>">
+									<?php echo $this->linkImage[$i] ?>
 							<?php
 								}
 							?>
