@@ -66,7 +66,10 @@ if (!class_exists('StickyLinks')) {
 				  )
 			    )
 			);
-			add_theme_support( 'post-thumbnails', array( 'sticky_links' ) );  
+            if (!current_theme_supports('post-thumbnails')) {
+                add_theme_support( 'post-thumbnails', array( 'sticky_links' ) );  
+            }
+			
 		}
 		
 		private function populateLinks() {
@@ -103,7 +106,7 @@ if (!class_exists('StickyLinks')) {
 							<?php
 								}
 							?>
-							<?php echo $this->linkText[$i]; ?>
+							<?php echo " ".$this->linkText[$i]; ?>
 						</a>
 					</div>
 				<?php

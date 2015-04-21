@@ -1,6 +1,6 @@
 .sticky-container {
 	position: fixed;
-	top: 150px;
+	top: 150px;	
 	/*right: 100px;*/
 	background: #707172;
 	padding: 5px;
@@ -20,7 +20,21 @@
 		width: 39px;
 		height: 39px;
 	}
+  @media only screen and (max-width: 75em) {
+  			top: initial; 
+        bottom: 0;
+        z-index: 200;
+        width: 100%;
+        text-align: center;
+        .sticky-link {
+        	float: left;
+        	padding: 5px;
+        }
+  }
+  
 }
 .sticky-link {
 	
 }
+
+
