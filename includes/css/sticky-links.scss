@@ -21,7 +21,7 @@
 		height: 39px;
 	}
   @media only screen and (max-width: 75em) {
-  			top: initial; 
+  			top: inherit; 
         bottom: 0;
         z-index: 200;
         width: 100%;
@@ -30,7 +30,7 @@
         	float: left;
         	padding: 5px;
         }
-  }
+       }
   
 }
 .sticky-link {
