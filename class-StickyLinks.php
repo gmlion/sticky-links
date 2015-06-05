@@ -98,7 +98,7 @@ if (!class_exists('StickyLinks')) {
 			for ($i = 0; $i < 3; $i++) {
 				?>
 					<div class="sticky-link">
-						<a href="<?php echo $this->linkAnchor[$i] ?>">
+						<a href="<?php echo $this->linkAnchor[$i] ?>" target="_blank">
 							<?php
 								if (!empty($this->linkImage[$i])) {
 							?>
