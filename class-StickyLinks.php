@@ -5,6 +5,7 @@ if (!class_exists('StickyLinks')) {
 		var $linkImage = array();
 		var $linkText = array();
 		var $linkAnchor = array();
+        var $action = array();
 	
 		function __construct() {
 			add_action( 'wp_enqueue_scripts', array($this, 'StickyLinks_scripts') );
@@ -62,7 +63,8 @@ if (!class_exists('StickyLinks')) {
 			      'supports' =>array(
 			      	'title',
 			      	'editor',
-			      	'thumbnail'
+			      	'thumbnail',
+                    'custom-fields'
 				  )
 			    )
 			);
@@ -83,6 +85,7 @@ if (!class_exists('StickyLinks')) {
 					$this->linkText[] = get_the_title();
 					$this->linkAnchor[] = get_the_content();
 					$this->linkImage[] = get_the_post_thumbnail( get_the_ID(), array(39,39));
+                    $this->action[] = get_post_custom_values('action')[0];                    
 				}
 				wp_reset_postdata();
 			}
@@ -95,10 +98,17 @@ if (!class_exists('StickyLinks')) {
 			?>
 			<div class="sticky-container">
 			<?php
-			for ($i = 0; $i < 3; $i++) {
+			for ($i = 0; $i < count($this->linkText); $i++) {
 				?>
 					<div class="sticky-link">
-						<a href="<?php echo $this->linkAnchor[$i] ?>" target="_blank">
+					<?php
+                    if (!empty($this->action[$i])) {
+                        ?> <a href="#" onclick="<?php echo $this->action[$i] ?>">
+                        <?php
+                    } else {
+                        ?> <a href="<?php echo $this->linkAnchor[$i] ?>" target="_blank"> <?php
+                    }
+                    ?>
 							<?php
 								if (!empty($this->linkImage[$i])) {
 							?>
